@@ -4,8 +4,13 @@ import os
 
 os.system("clear")
 
-drive_dir = os.path.join(os.path.dirname(__file__), 'drive')
-os.chdir(drive_dir)
+drive_dir = os.path.join(os.path.dirname(__file__), 'drive1')
+if os.path.exists(drive_dir):
+    os.chdir(drive_dir)
+else:
+    os.mkdir(drive_dir)
+    os.system(f"cp -r drive/* {drive_dir}/")
+    os.chdir(drive_dir)
 
 sys.path.append(os.path.join(drive_dir, 'bin'))
 
@@ -20,11 +25,14 @@ def get_dir():
     print(f"{relative_dir}")
 
 Run = True
+Saved = False
 
 def run(program, arg1=None, arg2=None):
-    global Run
+    global Run, Saved
     if program in ("exit", "shutdown"):
         Run = False
+    elif program == "save":
+        Saved = True
     else:
         try:
             module = importlib.import_module(program)
@@ -50,3 +58,6 @@ while Run:
     arg1 = parts[1] if len(parts) > 1 else None
     arg2 = parts[2] if len(parts) > 2 else None
     run(program, arg1, arg2)
+
+if not Saved:
+    os.system(f"rm -rf {drive_dir}")
