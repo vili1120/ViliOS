@@ -1,7 +1,7 @@
 import os
 
 def main(arg1=None, arg2=None):
-    protected_dir = "/home/vili1120/Projects/OS/drive/bin"
+    protected_dir = f"{os.getcwd}/bin"
 
     if os.getcwd() != protected_dir:
         target = os.path.abspath(arg1)

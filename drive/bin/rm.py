@@ -1,9 +1,10 @@
 import os
 
 def main(arg1=None, arg2=None):
-    protected_dir = "/home/vili1120/Projects/OS/drive/bin"
+    protected_dir = f"{os.getcwd()}/bin"
+    cwd = os.getcwd()
 
-    if os.getcwd() != protected_dir:
+    if cwd.startswith(protected_dir):
         if not arg1:
             print("Error: No file or directory specified to remove.")
             return
