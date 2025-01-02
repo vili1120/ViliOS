@@ -2,9 +2,11 @@ import importlib
 import sys
 import os
 
+LOAD_RAMFS = input("DIR to load> ")
+
 os.system("clear")
 
-drive_dir = os.path.join(os.path.dirname(__file__), 'drive1')
+drive_dir = os.path.join(os.path.dirname(__file__), LOAD_RAMFS)
 if os.path.exists(drive_dir):
     os.chdir(drive_dir)
 else:
@@ -25,14 +27,14 @@ def get_dir():
     print(f"{relative_dir}")
 
 Run = True
-Saved = False
 
 def run(program, arg1=None, arg2=None):
     global Run, Saved
     if program in ("exit", "shutdown"):
         Run = False
-    elif program == "save":
-        Saved = True
+    elif program == "reset":
+        os.system(f"rm -rf {drive_dir}")
+        Run = False
     else:
         try:
             module = importlib.import_module(program)
@@ -58,6 +60,3 @@ while Run:
     arg1 = parts[1] if len(parts) > 1 else None
     arg2 = parts[2] if len(parts) > 2 else None
     run(program, arg1, arg2)
-
-if not Saved:
-    os.system(f"rm -rf {drive_dir}")
