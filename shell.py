@@ -65,7 +65,7 @@ while Run:
     program = parts[0]
     arg1 = parts[1] if len(parts) > 1 else None
     arg2 = parts[2] if len(parts) > 2 else None
-    if program in ["adduser", "login"]:
+    if program in ["adduser", "login", "programs"]:
         run(program, arg1, arg2, drive_dir)
     else:
         run(program, arg1, arg2)
